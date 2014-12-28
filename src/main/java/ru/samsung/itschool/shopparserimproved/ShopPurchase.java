@@ -1,4 +1,4 @@
-package com.samsung.itschool.shopparserimproved;
+package ru.samsung.itschool.shopparserimproved;
 
 import java.util.*;
 
