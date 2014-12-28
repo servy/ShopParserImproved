@@ -3,22 +3,22 @@ package com.samsung.itschool.shopparserimproved;
 import java.util.*;
 
 /**
- * Неизменяемый (immutable) класс, который хранит данные об одной транзакции магазина - имя покупателя,
- * и набор пар "имя продукта" - стоимость.
+ * Неизменяемый (immutable) класс, который хранит данные об одной покупке в магазине - имя покупателя,
+ * и набор пар "название товара" - стоимость.
  *
  * @author - Pavel K {@literal <theservy@gmail.com>}
  */
-public class ShopTransaction {
+public class ShopPurchase {
     private String buyerName;
     private SortedMap<String, Integer> products;
 
     /**
-     * Позволяет создать новый объект ShopTransaction
+     * Позволяет создать новый объект ShopPurchase
      *
      * @param buyerName имя покупателя
      * @param products  информация о списке покупок; подробности см. в джавадоке к методу {@link #getProducts()}
      */
-    public ShopTransaction(String buyerName, Map<String, Integer> products) {
+    public ShopPurchase(String buyerName, Map<String, Integer> products) {
         this.buyerName = buyerName;
         // мы создаем немодифицируемую копию map'а, чтобы гарантировать, что после
         // вызова конструктора экземпляр нашего класса невозможно было (случайно или намеренно) изменить
@@ -26,7 +26,7 @@ public class ShopTransaction {
     }
 
     /**
-     * Возвращаем имя покупателя, который совершил данную транзакцию
+     * Возвращаем имя покупателя, который совершил данную покупку
      *
      * @return имя покупателя
      */
@@ -35,18 +35,18 @@ public class ShopTransaction {
     }
 
     /**
-     * Возвращает map, который каждому названию продукта (ключу типа String)
+     * Возвращает map, который каждому названию товара (ключу типа String)
      * сопоставляет количество денег (значение типа Integer), которые были
-     * потрачены на этот продукт в рамках этой транзакции
+     * потрачены на этот товар в рамках этой покупки
      *
-     * @return информацию о покупках в этой транзакции
+     * @return информацию о товарах в этой покупки
      */
     public Map<String, Integer> getProducts() {
         return products;
     }
 
     /**
-     * Возвращает информацию о транзакции в виде строки следующего вида
+     * Возвращает информацию о покупке в виде строки следующего вида
      *
      * <pre>
      * Buyer Name
@@ -58,7 +58,7 @@ public class ShopTransaction {
      *
      * и так далее для всех товаров. Товары выводятся в алфавитном порядке
      *
-     * @return строковое представление данной транзакции
+     * @return строковое представление данной покупки
      */
     @Override
     public String toString() {

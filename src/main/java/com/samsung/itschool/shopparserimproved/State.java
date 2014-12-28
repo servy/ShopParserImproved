@@ -23,7 +23,7 @@ public enum State {
      */
     READING_NAME {
         @Override
-        public State process(Reader input, ShopTransactionBuilder output) throws IOException {
+        public State process(Reader input, ShopPurchaseBuilder output) throws IOException {
             // пропустим возможные стартовые пробелы
             int currentChar = input.read();
             while (currentChar == ' ')
@@ -51,7 +51,7 @@ public enum State {
      */
     READING_COST {
         @Override
-        public State process(Reader input, ShopTransactionBuilder output) throws IOException {
+        public State process(Reader input, ShopPurchaseBuilder output) throws IOException {
             // пропустим возможные стартовые пробелы
             int currentChar = input.read();
             while (currentChar == ' ')
@@ -80,7 +80,7 @@ public enum State {
      */
     READING_PRODUCT {
         @Override
-        public State process(Reader input, ShopTransactionBuilder output) throws IOException {
+        public State process(Reader input, ShopPurchaseBuilder output) throws IOException {
             // мы не пропускаем возможные стартовые пробелы, так как внутри кавычек их не должно быть (или они являются
             // частью названия товара)
             StringBuilder productName = new StringBuilder();
@@ -105,7 +105,7 @@ public enum State {
      */
     READING_DELIMITER {
         @Override
-        public State process(Reader input, ShopTransactionBuilder output) throws IOException {
+        public State process(Reader input, ShopPurchaseBuilder output) throws IOException {
             while (true) {
                 int currentChar = input.read(); // читаем очередной символ
                 switch (currentChar) {
@@ -132,7 +132,7 @@ public enum State {
      */
     FINISHED {
         @Override
-        public State process(Reader input, ShopTransactionBuilder output) throws IOException {
+        public State process(Reader input, ShopPurchaseBuilder output) throws IOException {
             while (true) {
                 int currentChar = input.read(); // читаем очередной символ
                 switch (currentChar) {
@@ -160,7 +160,7 @@ public enum State {
      * @param output объект для хранения промежуточной генерируемой конечным автоматом информации
      * @return новое состояние конечного автомата
      */
-    public abstract State process(Reader input, ShopTransactionBuilder output) throws IOException;
+    public abstract State process(Reader input, ShopPurchaseBuilder output) throws IOException;
 
     /**
      * Реализация основного метода программы для демонстрации работы конечного автомата
@@ -173,7 +173,7 @@ public enum State {
         StringReader inputStringReader = new StringReader(inputLine);
 
         // сюда мы будем собирать результат работы конечного автомата
-        ShopTransactionBuilder output = new ShopTransactionBuilder();
+        ShopPurchaseBuilder output = new ShopPurchaseBuilder();
 
         // текущее состояние конечного автомата: изначально это чтение имени покупателя
         State currentState = State.READING_NAME;
@@ -181,9 +181,9 @@ public enum State {
             currentState = currentState.process(inputStringReader, output);
         }
 
-        ShopTransaction transaction = output.toShopTransaction();
-        // выведем результат; здесь мы могли бы написать какую-нибудь логику работы с transaction
+        ShopPurchase purchase = output.toShopPurchase();
+        // выведем результат; здесь мы могли бы написать какую-нибудь логику работы с purchase
         // если бы нам это было нужно
-        System.out.print(transaction);
+        System.out.print(purchase);
     }
 }
